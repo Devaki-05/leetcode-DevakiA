@@ -1,4 +1,4 @@
-// Last updated: 24/08/2026, 09:21:52
+// Last updated: 24/08/2026, 09:23:15
 1class Solution {
 2    public int[] sortedSquares(int[] nums) {
 3        int n = nums.length;
