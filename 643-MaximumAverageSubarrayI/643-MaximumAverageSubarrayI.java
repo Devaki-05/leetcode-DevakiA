@@ -1,21 +1,27 @@
-// Last updated: 24/08/2026, 09:29:35
-1class Solution {
-2    public double findMaxAverage(int[] nums, int k) {
-3        
-4        double currentSum = 0;
-5        for (int i = 0; i < k; i++) {
-6            currentSum += nums[i];
-7        }
-8        
-9        double maxSum = currentSum;
-10        
-11        
-12        for (int i = k; i < nums.length; i++) {
-13            currentSum += nums[i] - nums[i - k];
-14            maxSum = Math.max(maxSum, currentSum);
-15        }
-16        
-17        
-18        return maxSum / k;
-19    }
-20}
+// Last updated: 24/08/2026, 09:32:15
+1import java.util.*;
+2
+3class Solution {
+4    public List<Integer> preorderTraversal(TreeNode root) {
+5        List<Integer> result = new ArrayList<>();
+6        if (root == null) return result;
+7
+8        Stack<TreeNode> stack = new Stack<>();
+9        stack.push(root);
+10
+11        while (!stack.isEmpty()) {
+12            TreeNode node = stack.pop();
+13            result.add(node.val);
+14
+15            // Push right child first so left is popped and processed first
+16            if (node.right != null) {
+17                stack.push(node.right);
+18            }
+19            if (node.left != null) {
+20                stack.push(node.left);
+21            }
+22        }
+23
+24        return result;
+25    }
+26}
