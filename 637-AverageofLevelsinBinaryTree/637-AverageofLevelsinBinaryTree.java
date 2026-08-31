@@ -1,9 +1,17 @@
-// Last updated: 31/08/2026, 09:37:16
+// Last updated: 31/08/2026, 09:38:02
 1class Solution {
-2    public int maxDepth(TreeNode root) {
-3        if (root == null) {
-4            return 0;
-5        }
-6        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
-7    }
-8}
+2    public boolean isSameTree(TreeNode p, TreeNode q) {
+3        
+4        if (p == null && q == null) {
+5            return true;
+6        }
+7        
+8        
+9        if (p == null || q == null || p.val != q.val) {
+10            return false;
+11        }
+12        
+13        
+14        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+15    }
+16}
