@@ -1,17 +1,19 @@
-// Last updated: 31/08/2026, 09:38:02
+// Last updated: 31/08/2026, 09:39:31
 1class Solution {
-2    public boolean isSameTree(TreeNode p, TreeNode q) {
-3        
-4        if (p == null && q == null) {
-5            return true;
-6        }
+2    public TreeNode invertTree(TreeNode root) {
+3        if (root == null) {
+4            return null;
+5        }
+6
 7        
-8        
-9        if (p == null || q == null || p.val != q.val) {
-10            return false;
-11        }
+8        TreeNode temp = root.left;
+9        root.left = root.right;
+10        root.right = temp;
+11
 12        
-13        
-14        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-15    }
-16}
+13        invertTree(root.left);
+14        invertTree(root.right);
+15
+16        return root;
+17    }
+18}
