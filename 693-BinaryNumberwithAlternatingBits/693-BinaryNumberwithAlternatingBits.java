@@ -1,19 +1,25 @@
-// Last updated: 11/09/2026, 16:26:10
-1class Solution {
-2    public int findDuplicate(int[] nums) {
-3        int s=nums[0];
-4        int f = nums[0];
-5
-6        do{
-7            s = nums[s];
-8            f = nums[nums[f]];
-9        }while(s !=f);
-10
-11        s = nums[0];
-12        while(s != f){
-13            s = nums[s];
-14            f = nums[f];
-15        }
-16        return s;
-17    }
-18}
+// Last updated: 11/09/2026, 16:27:33
+1import java.util.HashMap;
+2import java.util.Map;
+3
+4class Solution {
+5    public int lengthOfLongestSubstring(String s) {
+6        Map<Character, Integer> charIndexMap = new HashMap<>();
+7        int maxLen = 0;
+8        int left = 0;
+9
+10        for (int right = 0; right < s.length(); right++) {
+11            char currentChar = s.charAt(right);
+12
+13            if (charIndexMap.containsKey(currentChar)) {
+14               
+15                left = Math.max(left, charIndexMap.get(currentChar) + 1);
+16            }
+17
+18            charIndexMap.put(currentChar, right);
+19            maxLen = Math.max(maxLen, right - left + 1);
+20        }
+21
+22        return maxLen;
+23    }
+24}
