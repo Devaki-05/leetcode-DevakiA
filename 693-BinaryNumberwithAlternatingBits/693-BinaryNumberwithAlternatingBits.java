@@ -1,25 +1,44 @@
-// Last updated: 11/09/2026, 16:02:27
-1class Solution {
-2    public int maxTurbulenceSize(int[] arr) {
-3        if(arr.length ==0) return 0;
-4
-5        int inc =1;
-6        int dec =1;
-7        int maxLen =1;
-8
-9        for(int i=1;i<arr.length;i++){
-10            if(arr[i]>arr[i-1]){
-11                inc = dec+1;
-12                dec =1;
-13            }else if(arr[i]<arr[i-1]){
-14                dec = inc+1;
-15                inc =1;
-16            }else{
-17                inc =1;
-18                dec =1;
-19            }
-20            maxLen = Math.max(maxLen,Math.max(inc,dec));
-21        }
-22        return maxLen;
-23    }
-24}
+// Last updated: 11/09/2026, 16:09:51
+1import java.util.ArrayList;
+2import java.util.Collections;
+3import java.util.HashMap;
+4import java.util.List;
+5import java.util.Map;
+6
+7class Solution {
+8    public List<List<Integer>> findWinners(int[][] matches) {
+9        Map<Integer, Integer> lossCount = new HashMap<>();
+10
+11        for (int[] match : matches) {
+12            int winner = match[0];
+13            int loser = match[1];
+14
+15            lossCount.putIfAbsent(winner, 0);
+16            lossCount.put(loser, lossCount.getOrDefault(loser, 0) + 1);
+17        }
+18
+19        List<Integer> zeroLoss = new ArrayList<>();
+20        List<Integer> oneLoss = new ArrayList<>();
+21
+22        for (Map.Entry<Integer, Integer> entry : lossCount.entrySet()) {
+23            int player = entry.getKey();
+24            int losses = entry.getValue();
+25
+26            if (losses == 0) {
+27                zeroLoss.add(player);
+28            } else if (losses == 1) {
+29                oneLoss.add(player);
+30            }
+31        }
+32
+33        Collections.sort(zeroLoss);
+34        Collections.sort(oneLoss);
+35
+36        List<List<Integer>> result = new ArrayList<>();
+37        result.add(zeroLoss);
+38        result.add(oneLoss);
+39
+40        return result;
+41    }
+42}
+43
