@@ -1,4 +1,4 @@
-// Last updated: 11/09/2026, 09:03:43
+// Last updated: 11/09/2026, 09:04:34
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -15,20 +15,19 @@
 14 * }
 15 */
 16class Solution {
-17    private int maxDiameter =0;
-18    public int diameterOfBinaryTree(TreeNode root) {
-19        getHeight(root);
-20        return maxDiameter;
-21    }
-22    private int getHeight(TreeNode node){
-23        if(node==null){
-24            return 0;
-25        }
-26        int leftHeight = getHeight(node.left);
-27        int rightHeight =getHeight(node.right);
-28
-29        maxDiameter =Math.max(maxDiameter,leftHeight+rightHeight);
-30
-31        return 1+Math.max(leftHeight,rightHeight);
-32    }
-33}
+17    public boolean isSymmetric(TreeNode root) {
+18        if(root == null){
+19            return true;
+20        }
+21        return isMirror(root.left,root.right);
+22    }
+23    private boolean isMirror(TreeNode t1,TreeNode t2){
+24        if(t1 == null && t2 == null){
+25            return true;
+26        }
+27        if(t1 == null || t2 == null || t1.val != t2.val){
+28            return false;
+29        }
+30        return isMirror(t1.left,t2.right) && isMirror(t1.right,t2.left);
+31    }
+32}
