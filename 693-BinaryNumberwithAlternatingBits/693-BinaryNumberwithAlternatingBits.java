@@ -1,18 +1,19 @@
-// Last updated: 11/09/2026, 16:20:15
+// Last updated: 11/09/2026, 16:26:10
 1class Solution {
-2    public int[] productExceptSelf(int[] nums) {
-3        int n = nums.length;
-4        int[]res = new int[n];
+2    public int findDuplicate(int[] nums) {
+3        int s=nums[0];
+4        int f = nums[0];
 5
-6        res[0]=1;
-7        for(int i=1;i<n;i++){
-8            res[i]=res[i-1]*nums[i-1];
-9        }
-10        int suffix =1;
-11        for(int i =n-1;i>=0;i--){
-12            res[i]*=suffix;
-13            suffix *=nums[i];
-14        }
-15        return res;
-16    }
-17}
+6        do{
+7            s = nums[s];
+8            f = nums[nums[f]];
+9        }while(s !=f);
+10
+11        s = nums[0];
+12        while(s != f){
+13            s = nums[s];
+14            f = nums[f];
+15        }
+16        return s;
+17    }
+18}
