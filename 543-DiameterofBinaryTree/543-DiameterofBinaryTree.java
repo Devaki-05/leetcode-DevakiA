@@ -1,4 +1,4 @@
-// Last updated: 11/09/2026, 09:18:41
+// Last updated: 11/09/2026, 09:21:08
 1/**
 2 * Definition for a binary tree node.
 3 * public class TreeNode {
@@ -15,24 +15,14 @@
 14 * }
 15 */
 16class Solution {
-17    public List<String> binaryTreePaths(TreeNode root) {
-18        List<String>paths = new ArrayList<>();
-19        if(root != null) {
-20            constructPaths(root,"",paths);
-21        }
-22        return paths;
-23           }
-24           private void constructPaths(TreeNode node,String path,List<String> paths){
-25            if(node == null) return;
-26            path +=Integer.toString(node.val);
-27            if(node.left == null && node.right == null){
-28                paths.add(path);
-29            }else{
-30                path +="->";
-31                constructPaths(node.left,path,paths);
-32                constructPaths(node.right,path,paths);
-33           
-34            }
-35            
-36           }
-37}
+17    public boolean hasPathSum(TreeNode root, int targetSum) {
+18        if(root == null){
+19            return false;
+20        }
+21        if(root.left == null && root.right == null){
+22            return root.val == targetSum;
+23        }
+24        int remainingSum = targetSum - root.val;
+25        return hasPathSum(root.left, remainingSum) || hasPathSum(root.right, remainingSum);
+26    }
+27}
