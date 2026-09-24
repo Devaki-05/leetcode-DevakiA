@@ -1,46 +1,33 @@
-// Last updated: 24/09/2026, 16:04:34
-1class Solution {
-2    public int splitArray(int[] nums, int k) {
-3        int maxVal = 0;
-4        int sumVal = 0;
-5
-6        for (int num : nums) {
-7            maxVal = Math.max(maxVal, num);
-8            sumVal += num;
-9        }
-10
-11        int left = maxVal;
-12        int right = sumVal;
-13
-14        while (left < right) {
-15            int mid = left + (right - left) / 2;
-16
-17            if (canSplit(nums, k, mid)) {
-18                right = mid; 
-19            } else {
-20                left = mid + 1; 
-21            }
-22        }
-23
-24        return left;
-25    }
-26
-27    private boolean canSplit(int[] nums, int k, int maxSum) {
-28        int currentSum = 0;
-29        int count = 1; 
-30
-31        for (int num : nums) {
-32            if (currentSum + num > maxSum) {
-33                count++;
-34                currentSum = num;
-35                if (count > k) {
-36                    return false;
-37                }
-38            } else {
-39                currentSum += num;
-40            }
-41        }
-42
-43        return true;
-44    }
-45}
+// Last updated: 24/09/2026, 16:07:09
+1import java.util.Arrays;
+2
+3class Solution {
+4    public int sumDistance(int[] nums, String s, int d) {
+5        int n = nums.length;
+6        long[] pos = new long[n];
+7        long MOD = 1_000_000_007;
+8
+9       
+10        for (int i = 0; i < n; i++) {
+11            if (s.charAt(i) == 'R') {
+12                pos[i] = (long) nums[i] + d;
+13            } else {
+14                pos[i] = (long) nums[i] - d;
+15            }
+16        }
+17
+18        
+19        Arrays.sort(pos);
+20
+21        
+22        long totalDistance = 0;
+23        for (int i = 0; i < n; i++) {
+24            
+25            
+26            long contribution = (i * pos[i] - (n - 1 - i) * pos[i]) % MOD;
+27            totalDistance = (totalDistance + contribution) % MOD;
+28        }
+29
+30        return (int) ((totalDistance + MOD) % MOD);
+31    }
+32}
