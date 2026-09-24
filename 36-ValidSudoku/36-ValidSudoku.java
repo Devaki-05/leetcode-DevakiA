@@ -1,46 +1,34 @@
-// Last updated: 24/09/2026, 15:59:26
-1import java.util.*;
-2
-3class RandomizedSet {
-4    private List<Integer> list;
-5    private Map<Integer, Integer> map;
-6    private Random rand;
-7
-8    public RandomizedSet() {
-9        list = new ArrayList<>();
-10        map = new HashMap<>();
-11        rand = new Random();
-12    }
-13
-14    public boolean insert(int val) {
-15        if (map.containsKey(val)) {
-16            return false;
-17        }
-18        map.put(val, list.size());
-19        list.add(val);
-20        return true;
-21    }
-22
-23    public boolean remove(int val) {
-24        if (!map.containsKey(val)) {
-25            return false;
-26        }
-27
-28        int index = map.get(val);
-29        int lastElement = list.get(list.size() - 1);
+// Last updated: 24/09/2026, 16:00:22
+1import java.util.HashMap;
+2import java.util.Map;
+3import java.util.PriorityQueue;
+4
+5class Solution {
+6    public int[] topKFrequent(int[] nums, int k) {
+7        // Step 1: Count element frequencies
+8        Map<Integer, Integer> countMap = new HashMap<>();
+9        for (int num : nums) {
+10            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+11        }
+12
+13        // Step 2: Min-heap to keep the top k frequent elements
+14        PriorityQueue<Integer> heap = new PriorityQueue<>(
+15            (a, b) -> countMap.get(a) - countMap.get(b)
+16        );
+17
+18        for (int num : countMap.keySet()) {
+19            heap.add(num);
+20            if (heap.size() > k) {
+21                heap.poll();
+22            }
+23        }
+24
+25        // Step 3: Build the result array from the heap
+26        int[] result = new int[k];
+27        for (int i = 0; i < k; i++) {
+28            result[i] = heap.poll();
+29        }
 30
-31        // Swap target element with the last element
-32        list.set(index, lastElement);
-33        map.put(lastElement, index);
-34
-35        // Remove the last element
-36        list.remove(list.size() - 1);
-37        map.remove(val);
-38
-39        return true;
-40    }
-41
-42    public int getRandom() {
-43        return list.get(rand.nextInt(list.size()));
-44    }
-45}
+31        return result;
+32    }
+33}
