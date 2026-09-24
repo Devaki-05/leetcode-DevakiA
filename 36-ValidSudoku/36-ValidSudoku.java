@@ -1,34 +1,39 @@
-// Last updated: 24/09/2026, 16:00:22
-1import java.util.HashMap;
-2import java.util.Map;
-3import java.util.PriorityQueue;
-4
-5class Solution {
-6    public int[] topKFrequent(int[] nums, int k) {
-7        // Step 1: Count element frequencies
-8        Map<Integer, Integer> countMap = new HashMap<>();
-9        for (int num : nums) {
-10            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
-11        }
-12
-13        // Step 2: Min-heap to keep the top k frequent elements
-14        PriorityQueue<Integer> heap = new PriorityQueue<>(
-15            (a, b) -> countMap.get(a) - countMap.get(b)
-16        );
-17
-18        for (int num : countMap.keySet()) {
-19            heap.add(num);
-20            if (heap.size() > k) {
-21                heap.poll();
-22            }
-23        }
+// Last updated: 24/09/2026, 16:02:38
+1import java.util.*;
+2
+3class Solution {
+4    public int[] topKFrequent(int[] nums, int k) {
+5        
+6        Map<Integer, Integer> countMap = new HashMap<>();
+7        for (int num : nums) {
+8            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+9        }
+10
+11        
+12        List<Integer>[] buckets = new List[nums.length + 1];
+13        for (int key : countMap.keySet()) {
+14            int freq = countMap.get(key);
+15            if (buckets[freq] == null) {
+16                buckets[freq] = new ArrayList<>();
+17            }
+18            buckets[freq].add(key);
+19        }
+20
+21        
+22        int[] result = new int[k];
+23        int index = 0;
 24
-25        // Step 3: Build the result array from the heap
-26        int[] result = new int[k];
-27        for (int i = 0; i < k; i++) {
-28            result[i] = heap.poll();
-29        }
-30
-31        return result;
-32    }
-33}
+25        for (int i = buckets.length - 1; i >= 0 && index < k; i--) {
+26            if (buckets[i] != null) {
+27                for (int num : buckets[i]) {
+28                    result[index++] = num;
+29                    if (index == k) {
+30                        return result;
+31                    }
+32                }
+33            }
+34        }
+35
+36        return result;
+37    }
+38}
